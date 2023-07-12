@@ -1,0 +1,33 @@
+server:
+  error:
+    whitelabel:
+      enabled: false
+  port: 8083
+  servlet:
+    context-path: /web
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    max-http-form-post-size: 100MB
+spring:
+  application:
+    name: sse.demo
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  mvc:
+    throwExceptionIfNoHandlerFound: true
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  web:
+    resources:
+      add-mappings: true

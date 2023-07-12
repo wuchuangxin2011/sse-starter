@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        #ResultContainer {
+            width: 500px; /* 设置容器宽度 */
+            height: 300px; /* 设置容器高度 */
+            overflow: auto; /* 添加滚动条 */
+            border: 1px solid #ccc; /* 添加边框 */
+            padding: 10px; /* 添加内边距 */
+        }
+    </style>
+</head>
+<body>
+
+<h2>SSE-DEMO</h2>
+
+<p>
+    Prompt: <input id="prompt" />
+    <button id="btnSend">发送</button>
+</p>
+<p>
+<div id="ResultContainer">
+    <span id="textResult"></span>
+</div>
+</p>
+
+
+<script>
+    var source = null;
+
+    function startSSE(message) {
+        if (typeof (EventSource) !== "undefined") {
+            var url = "http://localhost:8080/web/sse/test?prompt=" +  encodeURIComponent(message);;
+            source = new EventSource(url);
+            source.addEventListener("message", function (event) {
+                var decodedData = decodeURIComponent(event.data);
+
+                document.getElementById("textResult").innerHTML += decodedData  ;
+            });
+            source.onerror = function(event) {
+                console.log("EventSource failed:", event);
+                source.close(); // Close the connection on error
+            };
+        } else {
+            document.getElementById("textResult").innerHTML = "error";
+        }
+    }
+
+    document.getElementById("btnSend").addEventListener("click", function() {
+        // If an EventSource is already open, close it
+        if (source) {
+            source.close();
+        }
+
+        var prompt = document.getElementById("prompt").value;
+        startSSE(prompt);
+    });
+</script>
+
+</body>
+</html>
