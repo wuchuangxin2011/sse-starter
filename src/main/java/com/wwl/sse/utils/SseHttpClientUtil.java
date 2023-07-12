@@ -30,7 +30,7 @@ public class SseHttpClientUtil {
                 .uri(URI.create(url))
                 .header("Content-Type", "application/json; charset=UTF-8")
                 .header("Accept-Charset", "UTF-8")
-                .header("api-key", token)
+                .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
 
